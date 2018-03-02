@@ -3,8 +3,6 @@
 // Entry point into the application
 //
 
-#include <stdio.h>
-#include <iostream>
 #include "Common.h"
 #include "threading/ThreadPool.h"
 #include "services/LameService.h"
@@ -14,24 +12,62 @@
 
 using namespace std;
 
+LameService lameService;
+LoggingService loggingService;
+DirectoryService directoryService;
+
+void printDateTime(const char* format)
+{
+    string dateTime;
+
+    dateAsString(dateTime);
+
+    loggingService.log(format, dateTime.c_str());
+}
+
+
 int main(int argc, char* args[])
 {
-    LameService lameService;
-    LoggingService loggingService;
-    DirectoryService directoryService;
+    if (argc < 2)
+    {
+        loggingService.log("Usage: BulkWavConverter <directory>");
+        return 1;
+    }
 
-    list<string> files;
+    const char* directory = args[1];
 
-    int fileCount = directoryService.getFiles("./testfiles/", files);
+    printDateTime("Task started at %s");
 
     ThreadPool threadPool(DEFAULT_THREAD_COUNT);
 
-    threadPool.addTask(new Mp3EncoderTask("./testfiles/368024__warrior5445__song.wav", "testfiles/368024__warrior5445__song.mp3", &lameService, &loggingService));
-    threadPool.addTask(new Mp3EncoderTask("./testfiles/386469__ben-stone__harambe-the-bush-kangaroostart.wav", "testfiles/386469__ben-stone__harambe-the-bush-kangaroostart.mp3", &lameService, &loggingService));
-    threadPool.addTask(new Mp3EncoderTask("./testfiles/391538__mativve__cheerful-song.wav", "testfiles/391538__mativve__cheerful-song.mp3", &lameService, &loggingService));
-    threadPool.addTask(new Mp3EncoderTask("testfiles/largefile.wav", "testfiles/largefile1.mp3", &lameService, &loggingService));
-//    threadPool.addTask(new Mp3EncoderTask("testfiles/largefile.wav", "testfiles/largefile2.mp3", &lameService, &loggingService));
-//    threadPool.addTask(new Mp3EncoderTask("testfiles/largefile.wav", "testfiles/largefile3.mp3", &lameService, &loggingService));
+    list<string> files;
+
+    loggingService.log("Reading files from directory '%s'", directory);
+
+    int fileCount = directoryService.getFiles(directory, files);
+
+    if (fileCount > 0)
+    {
+        loggingService.log("Attempting to encode %d files\n", fileCount);
+
+        for (string& filenameWav : files) {
+
+            string filenameMp3;
+
+            directoryService.getTruncatedName(filenameWav.c_str(), filenameMp3);
+            filenameMp3 += MP3_EXTENSION;
+
+            threadPool.addTask(new Mp3EncoderTask(filenameWav.c_str(), filenameMp3.c_str(), &lameService, &loggingService));
+        }
+
+        threadPool.finish();
+    }
+    else
+    {
+        loggingService.log(fileCount == -1 ? "Directory does not exist" : "No files found in directory");
+    }
+
+    printDateTime("Task completed at %s");
 
     return 0;
 }

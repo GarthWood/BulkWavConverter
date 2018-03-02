@@ -47,7 +47,7 @@ private:
 
     LameService* _lameService;
 
-    atomic_bool running;
+    volatile atomic_bool waiting;
 
     pthread_mutex_t mutex;
 

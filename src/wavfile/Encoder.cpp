@@ -7,7 +7,7 @@
 
 Encoder::Encoder(const char* outputFilename, int sampleRate, int numChannels, LameService* lameService)
 : _lameService(lameService)
-, running(false)
+, waiting(true)
 , _numChannels(numChannels)
 {
     pthread_mutex_init(&mutex, 0);
@@ -47,24 +47,22 @@ Encoder::~Encoder()
 
 void Encoder::run()
 {
-    running = true;
-
-    while (running || !_chunks.empty())
+    while (waiting || !_chunks.empty())
     {
         if (!_chunks.empty())
         {
             while (!_chunks.empty())
             {
-                stChunk* buffer = nullptr;
+                stChunk* chunk = nullptr;
 
                 pthread_mutex_lock(&mutex);
-                buffer = _chunks.front();
+                chunk = _chunks.front();
                 _chunks.pop();
                 pthread_mutex_unlock(&mutex);
 
-                if (buffer != nullptr)
+                if (chunk != nullptr)
                 {
-                    encode(buffer);
+                    encode(chunk);
                 }
             }
         }
@@ -90,7 +88,7 @@ void Encoder::addChunk(stChunk *chunk)
 
 void Encoder::complete()
 {
-    running = false;
+    waiting = false;
 }
 
 void Encoder::encode(stChunk* chunk)

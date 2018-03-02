@@ -44,11 +44,15 @@ public:
     WavFileEncoder();
     virtual ~WavFileEncoder();
 
-    int loadAndEncode(const char* path, const char* output, LameService* lameService);
+    bool loadAndEncode(const char* path, const char* output, LameService* lameService, string& status);
 
     inline int getNumChannels() { return header.NumOfChan; }
 
     inline int getSampleRate() { return header.SamplesPerSec; }
+
+private:
+
+    bool isWav();
 
 private:
 

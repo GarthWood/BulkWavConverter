@@ -7,9 +7,14 @@
 
 #include <cstdio>
 #include <chrono>
+#include <string>
+
+using namespace std;
 
 const int DEFAULT_BUFFER_SIZE = 8196;
 const int DEFAULT_THREAD_COUNT = 24;
+
+#define MP3_EXTENSION           ".mp3"
 
 inline long getMilliseconds()
 {
@@ -25,6 +30,20 @@ inline int getFileSize(FILE* file)
     fseek(file,0,SEEK_SET);
 
     return size;
+}
+
+inline void dateAsString(string& output)
+{
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer[80];
+
+    time (&rawtime);
+    timeinfo = localtime(&rawtime);
+
+    strftime(buffer,sizeof(buffer),"%d-%m-%Y %I:%M:%S",timeinfo);
+
+    output = buffer;
 }
 
 #endif //BULKWAVCONVERTER_COMMON_H

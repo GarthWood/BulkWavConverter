@@ -16,18 +16,24 @@ WavFileEncoder::~WavFileEncoder()
 
 }
 
-int WavFileEncoder::loadAndEncode(const char* path, const char* output, LameService* lameService)
+bool WavFileEncoder::loadAndEncode(const char* path, const char* output, LameService* lameService, string& status)
 {
-    int headerSize = sizeof(WAV_HEADER), filelength = 0;
+    int headerSize = sizeof(WAV_HEADER);
+    bool result = false;
 
     FILE* wavFile = fopen(path, "rb");
 
-    if (wavFile == nullptr)
-        return 1;
-
     size_t bytesRead = fread(&header, 1, headerSize, wavFile);
 
-    if (bytesRead > 0)
+    if (bytesRead == 0)
+    {
+        status = "File is empty";
+    }
+    else if (!isWav())
+    {
+        status = "Not a WAV file";
+    }
+    else
     {
         int16_t buffer[DEFAULT_BUFFER_SIZE];
         Encoder encoder(output, header.SamplesPerSec, header.NumOfChan, lameService);
@@ -47,14 +53,18 @@ int WavFileEncoder::loadAndEncode(const char* path, const char* output, LameServ
             encoder.addChunk(stBuf);
         }
 
-        encoder.complete();
+        fclose(wavFile);
 
+        encoder.complete();
         encoder.join();
 
-        filelength = getFileSize(wavFile);
+        result = true;
     }
 
-    fclose(wavFile);
+    return result;
+}
 
-    return filelength;
+bool WavFileEncoder::isWav()
+{
+    return header.WAVE[0] == 'W' && header.WAVE[1] == 'A' && header.WAVE[2] == 'V' && header.WAVE[3] == 'E';
 }

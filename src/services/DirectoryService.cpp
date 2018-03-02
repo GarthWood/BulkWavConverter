@@ -2,8 +2,8 @@
 // Created by Garth on 2018/03/02.
 //
 
-#include <iostream>
 #include <sys/stat.h>
+#include <vector>
 #include "DirectoryService.h"
 #include "dirent.h"
 
@@ -21,6 +21,7 @@ int DirectoryService::getFiles(const char* path, list<string>& files)
 {
     DIR* directory;
     dirent* dent;
+    int fileCount = 0;
 
     if ((directory = opendir(path)) != nullptr)
     {
@@ -44,13 +45,33 @@ int DirectoryService::getFiles(const char* path, list<string>& files)
         }
 
         closedir(directory);
+
+        fileCount = (int) files.size();
     }
     else
     {
-        cout << "Unable to parse directory." << endl;
+        fileCount = -1;
     }
 
-    return (int) files.size();
+    return fileCount;
+}
+
+void DirectoryService::getTruncatedName(const char* path, string& filename)
+{
+    int len = (int) strlen(path);
+
+    while (--len >= 0)
+    {
+        if (path[len] == '.')
+        {
+            break;
+        }
+    }
+
+    for (int i = 0; i < len; ++i)
+    {
+        filename += path[i];
+    }
 }
 
 bool DirectoryService::isDirectory(string& path)

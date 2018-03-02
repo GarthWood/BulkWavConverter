@@ -18,6 +18,8 @@ public:
 
     int getFiles(const char* path, list<string>& files);
 
+    void getTruncatedName(const char* path, string& filename);
+
 private:
 
     bool isDirectory(string& path);

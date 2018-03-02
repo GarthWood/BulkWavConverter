@@ -31,8 +31,6 @@ private:
     LameServicePtr lameService;
 
     LoggingServicePtr loggingService;
-
-    long encodingStartTime;
 };
 
 

@@ -10,7 +10,6 @@ Mp3EncoderTask::Mp3EncoderTask(const char* inputFilename, const char* ouputFilen
 , _outputFilename(ouputFilename)
 , lameService(laService)
 , loggingService(loService)
-, encodingStartTime(0)
 {
 }
 
@@ -22,13 +21,19 @@ Mp3EncoderTask::~Mp3EncoderTask()
 void Mp3EncoderTask::run()
 {
     WavFileEncoder wavFile;
+    string status;
 
-    encodingStartTime = getMilliseconds();
+    long encodingStartTime = getMilliseconds();
 
-    wavFile.loadAndEncode(_inputFilename.c_str(), _outputFilename.c_str(), lameService);
+    if (wavFile.loadAndEncode(_inputFilename.c_str(), _outputFilename.c_str(), lameService, status))
+    {
+        long encodingDuration = getMilliseconds() - encodingStartTime;
 
-    long encodingDuration = getMilliseconds() - encodingStartTime;
-
-    loggingService->log("%s   Channels=%d   Duration=%ldms   [DONE]", _inputFilename.c_str(), wavFile.getNumChannels(), encodingDuration);
+        loggingService->log("%s   Duration=%ldms   [SUCCESS]", _inputFilename.c_str(), encodingDuration);
+    }
+    else
+    {
+        loggingService->log("%s   [ERROR]   %s", _inputFilename.c_str(), status.c_str());
+    }
 }
 

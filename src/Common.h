@@ -9,7 +9,7 @@
 #include <chrono>
 
 const int DEFAULT_BUFFER_SIZE = 8196;
-const int DEFAULT_THREAD_COUNT = 20;
+const int DEFAULT_THREAD_COUNT = 24;
 
 inline long getMilliseconds()
 {

@@ -2,19 +2,30 @@
 // Created by Garth on 2018/03/01.
 //
 
-#include "LoggingService.h"
+#include "ConsoleLoggingService.h"
 
-LoggingService::LoggingService()
+/**
+ * Constructor
+ */
+ConsoleLoggingService::ConsoleLoggingService()
 {
-    pthread_mutex_init(&mutex, 0);
+    pthread_mutex_init(&mMutex, 0);
 }
 
-LoggingService::~LoggingService()
+/**
+ * Destructor
+ */
+ConsoleLoggingService::~ConsoleLoggingService()
 {
-    pthread_mutex_destroy(&mutex);
+    pthread_mutex_destroy(&mMutex);
 }
 
-void LoggingService::log(const char* log, ...)
+/**
+ * Logs the specified message to the console
+ * @param log The log format
+ * @param ... The log params
+ */
+void ConsoleLoggingService::log(const char* log, ...)
 {
     va_list args;
     va_start(args, log);
@@ -33,9 +44,9 @@ void LoggingService::log(const char* log, ...)
         {
             vsnprintf(res, length, log, argsCopy);
 
-            pthread_mutex_lock(&mutex);
+            pthread_mutex_lock(&mMutex);
             cout << res << endl;
-            pthread_mutex_unlock(&mutex);
+            pthread_mutex_unlock(&mMutex);
 
             free(res);
         }

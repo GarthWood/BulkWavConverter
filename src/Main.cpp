@@ -1,21 +1,27 @@
-//
-// Created by Garth on 2018/02/28.
-// Entry point into the application
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * Entry point into the application
+ */
 
 #include "Common.h"
 #include "threading/ThreadPool.h"
 #include "services/LameService.h"
-#include "services/LoggingService.h"
+#include "services/ConsoleLoggingService.h"
 #include "services/DirectoryService.h"
 #include "Mp3EncoderTask.h"
 
 using namespace std;
 
 LameService lameService;
-LoggingService loggingService;
+ConsoleLoggingService loggingService;
 DirectoryService directoryService;
 
+/**
+ * Prints the date and time
+ * @param format The string to print along with the date and time
+ */
 void printDateTime(const char* format)
 {
     string dateTime;
@@ -25,7 +31,12 @@ void printDateTime(const char* format)
     loggingService.log(format, dateTime.c_str());
 }
 
-
+/**
+ * Application entry point
+ * @param argc The number of command line arguments
+ * @param args The command line arguments
+ * @return The result code
+ */
 int main(int argc, char* args[])
 {
     if (argc < 2)
@@ -54,7 +65,7 @@ int main(int argc, char* args[])
 
             string filenameMp3;
 
-            directoryService.getTruncatedName(filenameWav.c_str(), filenameMp3);
+            directoryService.getTruncatedPath(filenameWav.c_str(), filenameMp3);
             filenameMp3 += MP3_EXTENSION;
 
             threadPool.addTask(new Mp3EncoderTask(filenameWav.c_str(), filenameMp3.c_str(), &lameService, &loggingService));

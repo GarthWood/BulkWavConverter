@@ -102,10 +102,10 @@ $if i >= 1 [[
 }  // namespace internal
 
 // The style guide prohibits "using" statements in a namespace scope
-// inside a header file.  However, the FunctionMocker class template
+// inside a mHeader file.  However, the FunctionMocker class template
 // is meant to be defined in the ::testing namespace.  The following
 // line is just a trick for working around a bug in MSVC 8.0, which
-// cannot handle it if we define FunctionMocker in ::testing.
+// cannot mHandle it if we define FunctionMocker in ::testing.
 using internal::FunctionMocker;
 
 // GMOCK_RESULT_(tn, F) expands to the result type of function type F.

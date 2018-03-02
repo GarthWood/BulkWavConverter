@@ -1,21 +1,40 @@
-//
-// Created by Garth on 2018/03/01.
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * Adapted from https://stackoverflow.com/a/32128050
+ *
+ * Loads a WAV file and adds audio chunks to an encoder
+ */
 
 #include "WavFileEncoder.h"
 #include "../Common.h"
 #include "Encoder.h"
 
+/**
+ * Constructor
+ */
 WavFileEncoder::WavFileEncoder()
 {
 
 }
 
+/**
+ * Destructor
+ */
 WavFileEncoder::~WavFileEncoder()
 {
 
 }
 
+/**
+ * Loads the WAV file and encodes it at the same time on a separate thread
+ * @param path The path to the WAV file
+ * @param output The path to the output file
+ * @param lameService The gloval LameService
+ * @param status The error status in the case of an error
+ * @return Whether the file could be encoded
+ */
 bool WavFileEncoder::loadAndEncode(const char* path, const char* output, LameService* lameService, string& status)
 {
     int headerSize = sizeof(WAV_HEADER);
@@ -23,7 +42,7 @@ bool WavFileEncoder::loadAndEncode(const char* path, const char* output, LameSer
 
     FILE* wavFile = fopen(path, "rb");
 
-    size_t bytesRead = fread(&header, 1, headerSize, wavFile);
+    size_t bytesRead = fread(&mHeader, 1, headerSize, wavFile);
 
     if (bytesRead == 0)
     {
@@ -36,7 +55,7 @@ bool WavFileEncoder::loadAndEncode(const char* path, const char* output, LameSer
     else
     {
         int16_t buffer[DEFAULT_BUFFER_SIZE];
-        Encoder encoder(output, header.SamplesPerSec, header.NumOfChan, lameService);
+        Encoder encoder(output, mHeader.SamplesPerSec, mHeader.NumOfChan, lameService);
 
         encoder.start();
 
@@ -64,7 +83,16 @@ bool WavFileEncoder::loadAndEncode(const char* path, const char* output, LameSer
     return result;
 }
 
+
+/****************************************************************************
+ * Private Methods
+****************************************************************************/
+
+/**
+ * Whether this file is in WAV format
+ * @return Whether this file is in WAV format
+ */
 bool WavFileEncoder::isWav()
 {
-    return header.WAVE[0] == 'W' && header.WAVE[1] == 'A' && header.WAVE[2] == 'V' && header.WAVE[3] == 'E';
+    return mHeader.WAVE[0] == 'W' && mHeader.WAVE[1] == 'A' && mHeader.WAVE[2] == 'V' && mHeader.WAVE[3] == 'E';
 }

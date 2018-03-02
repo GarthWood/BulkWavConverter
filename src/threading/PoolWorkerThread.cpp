@@ -1,23 +1,41 @@
-//
-// Courtesy of https://stackoverflow.com/a/22285532 with some modifications
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * Adapted from https://stackoverflow.com/a/22285532
+ *
+ * A thread pool worker
+ */
 
 #include "PoolWorkerThread.h"
 
-PoolWorkerThread::PoolWorkerThread(ThreadWorkQueue& _work_queue, bool deleteTaskOnComplete/* = true*/)
-: work_queue(_work_queue)
-, deleteOnComplete(deleteTaskOnComplete)
+/**
+ * Constructor
+ * @param workQueue The threading work queue
+ * @param deleteTaskOnComplete Whether the task must be delete once it completes
+ */
+PoolWorkerThread::PoolWorkerThread(ThreadWorkQueue& workQueue, bool deleteTaskOnComplete/* = true*/)
+: mWorkQueue(workQueue)
+, mDeleteTaskOnComplete(deleteTaskOnComplete)
 {
 
 }
 
+
+/****************************************************************************
+ * Protected Methods
+****************************************************************************/
+
+/**
+ * Executes the pool task
+ */
 void PoolWorkerThread::run()
 {
-    while (ThreadTask* task = work_queue.nextTask())
+    while (ThreadTask* task = mWorkQueue.nextTask())
     {
         task->run();
 
-        if (deleteOnComplete)
+        if (mDeleteTaskOnComplete)
         {
             delete task;
         }

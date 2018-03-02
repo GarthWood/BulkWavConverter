@@ -4,16 +4,28 @@
 
 #include "LameService.h"
 
+/**
+ * Constructor
+ */
 LameService::LameService()
 {
 
 }
 
+/**
+ * Destructor
+ */
 LameService::~LameService()
 {
 
 }
 
+/**
+ * Creates a new LAME instance with the parameters provided
+ * @param sampleRate The sample rate
+ * @param numChannels The number of channels
+ * @return A LAME instance
+ */
 lame_t LameService::createLameInstance(int sampleRate, int numChannels)
 {
     lame_t lame = lame_init();
@@ -28,6 +40,10 @@ lame_t LameService::createLameInstance(int sampleRate, int numChannels)
     return lame;
 }
 
+/**
+ * Destroys the specified LAME instance
+ * @param lame The lame instance
+ */
 void LameService::destroyLameInstance(lame_t lame)
 {
     lame_close(lame);

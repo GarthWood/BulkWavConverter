@@ -1,6 +1,11 @@
-//
-// Courtesy of https://stackoverflow.com/a/22285532 with some modifications
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * Adapted from https://stackoverflow.com/a/22285532
+ *
+ * A thread pool to manage concurrency
+ */
 
 #ifndef BULKWAVCONVERTER_THREADPOOL_H
 #define BULKWAVCONVERTER_THREADPOOL_H
@@ -15,14 +20,21 @@ using namespace std;
 class ThreadPool
 {
 public:
+    /**
+     * Constructor
+     */
     ThreadPool(int size);
+
+    /**
+     * Destructor
+     */
     virtual ~ThreadPool();
 
     /**
      * Add a task
-     * @param nt The task to add
+     * @param task The task to add
      */
-    void addTask(ThreadTask *nt);
+    void addTask(ThreadTask* task);
 
     /**
      * Asking the threads to finish, waiting for the task queue to be consumed and then returning.
@@ -31,10 +43,10 @@ public:
 
 private:
 
-    vector<PoolWorkerThread*> threads;
+    vector<PoolWorkerThread*> mThreads;
 
-    ThreadWorkQueue workQueue;
+    ThreadWorkQueue mWorkQueue;
 };
 
 
-#endif //BULKWAVCONVERTER_THREADPOOL_H
+#endif // BULKWAVCONVERTER_THREADPOOL_H

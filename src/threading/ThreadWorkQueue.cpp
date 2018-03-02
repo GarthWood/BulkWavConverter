@@ -1,57 +1,67 @@
-//
-// Courtesy of https://stackoverflow.com/a/22285532 with some modifications
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * Adapted from https://stackoverflow.com/a/22285532
+ *
+ * A queue to hold thread tasks
+ */
 
 #include "ThreadWorkQueue.h"
 
+/**
+ * Constructor
+ */
 ThreadWorkQueue::ThreadWorkQueue()
 {
-    pthread_mutex_init(&qmtx,0);
+    pthread_mutex_init(&mQmtx, 0);
 
-    // wcond is a condition variable that's signaled
-    // when new work arrives
-    pthread_cond_init(&wcond, 0);
+    pthread_cond_init(&mWcond, 0);
 }
 
+/**
+ * Destructor
+ */
 ThreadWorkQueue::~ThreadWorkQueue()
 {
-    // Cleanup pthreads
-    pthread_mutex_destroy(&qmtx);
-    pthread_cond_destroy(&wcond);
+    pthread_mutex_destroy(&mQmtx);
+    pthread_cond_destroy(&mWcond);
 }
 
-// Retrieves the next task from the queue
+/**
+ * Retrieves the next task from the queue
+ * @return The task at the front of the queue
+ */
 ThreadTask* ThreadWorkQueue::nextTask()
 {
-    // The return value
-    ThreadTask *nt = 0;
+    ThreadTask* task = nullptr;
 
-    // Lock the queue mutex
-    pthread_mutex_lock(&qmtx);
+    pthread_mutex_lock(&mQmtx);
 
-    while (tasks.empty())
-        pthread_cond_wait(&wcond, &qmtx);
+    while (mTasks.empty())
+    {
+        pthread_cond_wait(&mWcond, &mQmtx);
+    }
 
-    nt = tasks.front();
-    tasks.pop();
+    task = mTasks.front();
+    mTasks.pop();
 
-    // Unlock the mutex and return
-    pthread_mutex_unlock(&qmtx);
-    return nt;
+    pthread_mutex_unlock(&mQmtx);
+
+    return task;
 }
 
-// Add a task
-void ThreadWorkQueue::addTask(ThreadTask *nt)
+/**
+ * Add a task
+ * @param task The task to add
+ */
+void ThreadWorkQueue::addTask(ThreadTask* task)
 {
-    // Lock the queue
-    pthread_mutex_lock(&qmtx);
+    pthread_mutex_lock(&mQmtx);
 
-    // Add the task
-    tasks.push(nt);
+    mTasks.push(task);
 
-    // signal there's new work
-    pthread_cond_signal(&wcond);
+    pthread_cond_signal(&mWcond);
 
-    // Unlock the mutex
-    pthread_mutex_unlock(&qmtx);
+    pthread_mutex_unlock(&mQmtx);
 }

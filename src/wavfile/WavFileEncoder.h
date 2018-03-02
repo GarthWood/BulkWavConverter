@@ -1,7 +1,11 @@
-//
-// Created by Garth on 2018/03/01.
-// Adapted from https://stackoverflow.com/a/32128050
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * Adapted from https://stackoverflow.com/a/32128050
+ *
+ * Loads a WAV file and adds audio chunks to an encoder
+ */
 
 #ifndef BULKWAVCONVERTER_WAVREADER_H
 #define BULKWAVCONVERTER_WAVREADER_H
@@ -20,14 +24,17 @@ using std::string;
 
 class WavFileEncoder
 {
+    /**
+     * WAVE file header
+     */
     struct WAV_HEADER
     {
         /* RIFF Chunk Descriptor */
-        uint8_t         RIFF[4];        // RIFF Header Magic header
+        uint8_t         RIFF[4];        // RIFF Header Magic mHeader
         uint32_t        ChunkSize;      // RIFF Chunk Size
         uint8_t         WAVE[4];        // WAVE Header
         /* "fmt" sub-chunk */
-        uint8_t         fmt[4];         // FMT header
+        uint8_t         fmt[4];         // FMT mHeader
         uint32_t        Subchunk1Size;  // Size of the fmt chunk
         uint16_t        AudioFormat;    // Audio format 1=PCM,6=mulaw,7=alaw,     257=IBM Mu-Law, 258=IBM A-Law, 259=ADPCM
         uint16_t        NumOfChan;      // Number of channels 1=Mono 2=Sterio
@@ -41,23 +48,49 @@ class WavFileEncoder
     };
 
 public:
+    /**
+     * Constructor
+     */
     WavFileEncoder();
+
+    /**
+     * Destructor
+     */
     virtual ~WavFileEncoder();
 
+    /**
+     * Loads the WAV file and encodes it at the same time on a separate thread
+     * @param path The path to the WAV file
+     * @param output The path to the output file
+     * @param lameService The gloval LameService
+     * @param status The error status in the case of an error
+     * @return Whether the file could be encoded
+     */
     bool loadAndEncode(const char* path, const char* output, LameService* lameService, string& status);
 
-    inline int getNumChannels() { return header.NumOfChan; }
+    /**
+     * Retrieves the number of channels
+     * @return The number of channels
+     */
+    inline int getNumChannels() { return mHeader.NumOfChan; }
 
-    inline int getSampleRate() { return header.SamplesPerSec; }
+    /**
+     * Retrieves the sample rate
+     * @return The sameple rate
+     */
+    inline int getSampleRate() { return mHeader.SamplesPerSec; }
 
 private:
 
+    /**
+     * Whether this file is in WAV format
+     * @return Whether this file is in WAV format
+     */
     bool isWav();
 
 private:
 
-    WAV_HEADER header;
+    WAV_HEADER mHeader;
 };
 
-
-#endif //BULKWAVCONVERTER_WAVREADER_H
+#endif // BULKWAVCONVERTER_WAVREADER_H

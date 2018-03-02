@@ -1,6 +1,9 @@
-//
-// Created by Garth on 2018/03/01.
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * Common vars and methods
+ */
 
 #ifndef BULKWAVCONVERTER_COMMON_H
 #define BULKWAVCONVERTER_COMMON_H
@@ -46,4 +49,4 @@ inline void dateAsString(string& output)
     output = buffer;
 }
 
-#endif //BULKWAVCONVERTER_COMMON_H
+#endif // BULKWAVCONVERTER_COMMON_H

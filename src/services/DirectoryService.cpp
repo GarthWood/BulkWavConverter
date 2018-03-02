@@ -7,16 +7,28 @@
 #include "DirectoryService.h"
 #include "dirent.h"
 
+/**
+ * Constructor
+ */
 DirectoryService::DirectoryService()
 {
 
 }
 
+/**
+ * Destructor
+ */
 DirectoryService::~DirectoryService()
 {
 
 }
 
+/**
+ * Gets the list of files in the folder provided and all subfolders
+ * @param path The directory
+ * @param files THe output file list
+ * @return The number of files found
+ */
 int DirectoryService::getFiles(const char* path, list<string>& files)
 {
     DIR* directory;
@@ -56,7 +68,12 @@ int DirectoryService::getFiles(const char* path, list<string>& files)
     return fileCount;
 }
 
-void DirectoryService::getTruncatedName(const char* path, string& filename)
+/**
+ * Gets the filename less the extension
+ * @param path The file path
+ * @param filename The output filename
+ */
+void DirectoryService::getTruncatedPath(const char *path, string &filename)
 {
     int len = (int) strlen(path);
 
@@ -74,6 +91,16 @@ void DirectoryService::getTruncatedName(const char* path, string& filename)
     }
 }
 
+
+/****************************************************************************
+ * Private Methods
+****************************************************************************/
+
+/**
+ * Returns whether the specified path is a directory
+ * @param path The path
+ * @return Whether the specified path is a directory
+ */
 bool DirectoryService::isDirectory(string& path)
 {
     struct stat statbuf;
@@ -84,6 +111,11 @@ bool DirectoryService::isDirectory(string& path)
     return S_ISDIR(statbuf.st_mode);
 }
 
+/**
+ * Returns whether the specified path must be excluded from the list
+ * @param path The path
+ * @return Whether the specified path must be excluded from the list
+ */
 bool DirectoryService::isExcluded(const char* path)
 {
     string name(path);
@@ -91,6 +123,12 @@ bool DirectoryService::isExcluded(const char* path)
     return name == "." || name == ".." || name == ".DS_Store";
 }
 
+/**
+ * Appends two paths together
+ * @param first The first path
+ * @param second The second path
+ * @param fullPath The output path
+ */
 void DirectoryService::appendPath(const char* first, const char* second, string& fullPath)
 {
     size_t len = strlen(first);

@@ -1,44 +1,68 @@
-//
-// Courtesy of https://stackoverflow.com/a/22285532 with some modifications
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * Adapted from https://stackoverflow.com/a/22285532
+ *
+ * A thread container
+ */
 
 #include "Thread.h"
 
+/**
+ * Constructor
+ */
 Thread::Thread()
-: state(EState_None)
-, handle(0)
+: mState(EState_None)
+, mHandle(0)
 {
 }
 
+/**
+ * Destructor
+ */
 Thread::~Thread()
 {
-    assert(state != EState_Started || joined);
+    assert(mState != EState_Started || mJoined);
 }
 
+/**
+ * Starts the thread
+ */
 void Thread::start()
 {
-    assert(state == EState_None);
+    assert(mState == EState_None);
 
-    // in case of thread create error I usually FatalExit...
-    if (pthread_create(&handle, nullptr, threadProc, this))
+    if (pthread_create(&mHandle, nullptr, threadProc, this))
     {
         abort();
     }
 
-    state = EState_Started;
+    mState = EState_Started;
 }
 
+/**
+ * Causes the calling thread to block until this thread completes
+ */
 void Thread::join()
 {
-    // A started thread must be joined exactly once!
-    // This requirement could be eliminated with an alternative implementation but it isn't needed.
-    assert(state == EState_Started);
+    assert(mState == EState_Started);
 
-    pthread_join(handle, nullptr);
+    pthread_join(mHandle, nullptr);
 
-    state = EState_Joined;
+    mState = EState_Joined;
 }
 
+
+/****************************************************************************
+ * Private Methods
+****************************************************************************/
+
+/**
+ * Initiates the thread
+ * @param param The thread paramter
+ * @return A thread parameter
+ */
 void* Thread::threadProc(void* param)
 {
     auto thread = reinterpret_cast<Thread*>(param);

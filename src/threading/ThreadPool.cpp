@@ -1,39 +1,57 @@
-//
-// Courtesy of https://stackoverflow.com/a/22285532 with some modifications
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * Adapted from https://stackoverflow.com/a/22285532
+ *
+ * A thread pool to manage concurrency
+ */
 
 #include "ThreadPool.h"
 
+/**
+ * Constructor
+ */
 ThreadPool::ThreadPool(int size)
 {
     for (int i = 0; i < size; ++i)
     {
-        threads.push_back(new PoolWorkerThread(workQueue));
-        threads.back()->start();
+        mThreads.push_back(new PoolWorkerThread(mWorkQueue));
+        mThreads.back()->start();
     }
 }
 
+/**
+ * Destructor
+ */
 ThreadPool::~ThreadPool()
 {
     finish();
 }
 
-void ThreadPool::addTask(ThreadTask *nt)
+/**
+ * Add a task
+ * @param task The task to add
+ */
+void ThreadPool::addTask(ThreadTask *task)
 {
-    workQueue.addTask(nt);
+    mWorkQueue.addTask(task);
 }
 
+/**
+ * Asking the threads to finish, waiting for the task queue to be consumed and then returning.
+ */
 void ThreadPool::finish()
 {
-    for (size_t i = 0; i < threads.size(); ++i)
+    for (size_t i = 0; i < mThreads.size(); ++i)
     {
-        workQueue.addTask(nullptr);
+        mWorkQueue.addTask(nullptr);
     }
 
-    for (auto &thread : threads) {
+    for (auto &thread : mThreads) {
         thread->join();
         delete thread;
     }
 
-    threads.clear();
+    mThreads.clear();
 }

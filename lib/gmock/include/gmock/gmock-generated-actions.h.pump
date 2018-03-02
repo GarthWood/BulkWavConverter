@@ -731,7 +731,7 @@ struct AdlTag {};
 // InvokeArgumentAdl - a helper for InvokeArgument.
 // The basic overloads are provided here for generic functors.
 // Overloads for other custom-callables are provided in the
-// internal/custom/callback-actions.h header.
+// internal/custom/callback-actions.h mHeader.
 
 $range i 0..n
 $for i
@@ -787,7 +787,7 @@ ACTION_TEMPLATE(ReturnNew,
 }  // namespace testing
 
 // Include any custom callback actions added by the local installation.
-// We must include this header at the end to make sure it can use the
+// We must include this mHeader at the end to make sure it can use the
 // declarations from this file.
 #include "gmock/internal/custom/gmock-generated-actions.h"
 

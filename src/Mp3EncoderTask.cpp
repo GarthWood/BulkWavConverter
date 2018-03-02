@@ -1,23 +1,44 @@
-//
-// Created by Garth on 2018/03/01.
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * Spawns a new thread and initiates the WAV to MP3 encoding
+ */
 
 #include "Common.h"
 #include "Mp3EncoderTask.h"
 
-Mp3EncoderTask::Mp3EncoderTask(const char* inputFilename, const char* ouputFilename, LameServicePtr laService, LoggingServicePtr loService)
-: _inputFilename(inputFilename)
-, _outputFilename(ouputFilename)
-, lameService(laService)
-, loggingService(loService)
+/**
+ * Constructor
+ * @param inputFilename The audio input source filename
+ * @param ouputFilename The output source filename
+ * @param lameService The global LameService
+ * @param loggingService  The global LoggingService
+ */
+Mp3EncoderTask::Mp3EncoderTask(const char* inputFilename, const char* ouputFilename, LameServicePtr lameService, LoggingServicePtr loggingService)
+: mInputFilename(inputFilename)
+, mOutputFilename(ouputFilename)
+, mLameService(lameService)
+, mLoggingService(loggingService)
 {
 }
 
+/**
+ * Destructor
+ */
 Mp3EncoderTask::~Mp3EncoderTask()
 {
 
 }
 
+
+/****************************************************************************
+ * Protected Methods
+****************************************************************************/
+
+/**
+ * Executes the encoder task
+ */
 void Mp3EncoderTask::run()
 {
     WavFileEncoder wavFile;
@@ -25,15 +46,15 @@ void Mp3EncoderTask::run()
 
     long encodingStartTime = getMilliseconds();
 
-    if (wavFile.loadAndEncode(_inputFilename.c_str(), _outputFilename.c_str(), lameService, status))
+    if (wavFile.loadAndEncode(mInputFilename.c_str(), mOutputFilename.c_str(), mLameService, status))
     {
         long encodingDuration = getMilliseconds() - encodingStartTime;
 
-        loggingService->log("%s   Duration=%ldms   [SUCCESS]", _inputFilename.c_str(), encodingDuration);
+        mLoggingService->log("%s   Duration=%ldms   [SUCCESS]", mInputFilename.c_str(), encodingDuration);
     }
     else
     {
-        loggingService->log("%s   [ERROR]   %s", _inputFilename.c_str(), status.c_str());
+        mLoggingService->log("%s   [ERROR]   %s", mInputFilename.c_str(), status.c_str());
     }
 }
 

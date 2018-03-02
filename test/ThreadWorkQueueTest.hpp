@@ -1,6 +1,9 @@
-//
-// Created by Garth on 2018/03/02.
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * Unit test for the ThreadWorkQueue
+ */
 
 #ifndef BULKWAVCONVERTER_THREADWORKQUEUETEST_H
 #define BULKWAVCONVERTER_THREADWORKQUEUETEST_H
@@ -15,33 +18,26 @@
 class ThreadWorkQueueTest : public ::testing::Test
 {
 protected:
-    ThreadWorkQueueTest()
-    {
-    }
-
-    virtual ~ThreadWorkQueueTest()
-    {
-    }
-
+    /**
+     * Sets up the test
+     */
     virtual void SetUp()
     {
-        queue.addTask(new ThreadTaskTest(TEST_TASK_1_NAME));
-        queue.addTask(new ThreadTaskTest(TEST_TASK_2_NAME));
+        mQueue.addTask(new ThreadTaskTest(TEST_TASK_1_NAME));
+        mQueue.addTask(new ThreadTaskTest(TEST_TASK_2_NAME));
     }
 
-    virtual void TearDown()
-    {
-    }
-
-    ThreadWorkQueue queue;
+    ThreadWorkQueue mQueue;
 };
 
-
+/**
+ *  Validates that the correct task is returned from the queue
+ */
 TEST_F(ThreadWorkQueueTest, NextTaskRetrievesFirstTask)
 {
-    ThreadTaskTest* task = static_cast<ThreadTaskTest*>(queue.nextTask());
+    ThreadTaskTest* task = static_cast<ThreadTaskTest*>(mQueue.nextTask());
 
     ASSERT_STREQ(task->getName(), TEST_TASK_1_NAME);
 }
 
-#endif //BULKWAVCONVERTER_THREADWORKQUEUETEST_H
+#endif // BULKWAVCONVERTER_THREADWORKQUEUETEST_H

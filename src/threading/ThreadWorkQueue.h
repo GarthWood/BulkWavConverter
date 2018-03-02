@@ -1,6 +1,11 @@
-//
-// Courtesy of https://stackoverflow.com/a/22285532 with some modifications
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * Adapted from https://stackoverflow.com/a/22285532
+ *
+ * A queue to hold thread tasks
+ */
 
 #ifndef BULKWAVCONVERTER_THREADWORKQUEUE_H
 #define BULKWAVCONVERTER_THREADWORKQUEUE_H
@@ -13,27 +18,36 @@
 class ThreadWorkQueue
 {
 public:
+    /**
+     * Constructor
+     */
     ThreadWorkQueue();
+
+    /**
+     * Destructor
+     */
     virtual ~ThreadWorkQueue();
 
     /**
      * Retrieves the next task from the queue
+     * @return The task at the front of the queue
      */
     ThreadTask* nextTask();
 
     /**
      * Add a task
+     * @param task The task to add
      */
-    void addTask(ThreadTask *nt);
+    void addTask(ThreadTask* task);
 
 private:
 
-    std::queue<ThreadTask*> tasks;
+    std::queue<ThreadTask*> mTasks;
 
-    pthread_mutex_t qmtx;
+    pthread_mutex_t mQmtx;
 
-    pthread_cond_t wcond;
+    pthread_cond_t mWcond;
 };
 
 
-#endif //BULKWAVCONVERTER_THREADWORKQUEUE_H
+#endif // BULKWAVCONVERTER_THREADWORKQUEUE_H

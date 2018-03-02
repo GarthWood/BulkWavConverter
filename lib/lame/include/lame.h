@@ -233,7 +233,7 @@ int CDECL lame_set_analysis(lame_global_flags *, int);
 int CDECL lame_get_analysis(const lame_global_flags *);
 
 /*
-  1 = write a Xing VBR header frame.
+  1 = write a Xing VBR mHeader frame.
   default = 1
   this variable must have been added by a Hungarian notation Windows programmer :-)
 */
@@ -713,7 +713,7 @@ void CDECL lame_print_internals( const lame_global_flags *gfp);
  *
 */
 int CDECL lame_encode_buffer (
-        lame_global_flags*  gfp,           /* global context handle         */
+        lame_global_flags*  gfp,           /* global context mHandle         */
         const short int     buffer_l [],   /* PCM data for left channel     */
         const short int     buffer_r [],   /* PCM data for right channel    */
         const int           nsamples,      /* number of samples per channel */
@@ -744,7 +744,7 @@ int CDECL lame_encode_buffer_interleaved(
  * short int, +/- 32768
  */
 int CDECL lame_encode_buffer_float(
-        lame_global_flags*  gfp,           /* global context handle         */
+        lame_global_flags*  gfp,           /* global context mHandle         */
         const float         pcm_l [],      /* PCM data for left channel     */
         const float         pcm_r [],      /* PCM data for right channel    */
         const int           nsamples,      /* number of samples per channel */
@@ -797,7 +797,7 @@ int CDECL lame_encode_buffer_interleaved_ieee_double(
  *
  */
 int CDECL lame_encode_buffer_long(
-        lame_global_flags*  gfp,           /* global context handle         */
+        lame_global_flags*  gfp,           /* global context mHandle         */
         const long     buffer_l [],       /* PCM data for left channel     */
         const long     buffer_r [],       /* PCM data for right channel    */
         const int           nsamples,      /* number of samples per channel */
@@ -811,7 +811,7 @@ int CDECL lame_encode_buffer_long(
  *
  */
 int CDECL lame_encode_buffer_long2(
-        lame_global_flags*  gfp,           /* global context handle         */
+        lame_global_flags*  gfp,           /* global context mHandle         */
         const long     buffer_l [],       /* PCM data for left channel     */
         const long     buffer_r [],       /* PCM data for right channel    */
         const int           nsamples,      /* number of samples per channel */
@@ -829,7 +829,7 @@ int CDECL lame_encode_buffer_long2(
  *
  */
 int CDECL lame_encode_buffer_int(
-        lame_global_flags*  gfp,           /* global context handle         */
+        lame_global_flags*  gfp,           /* global context mHandle         */
         const int      buffer_l [],       /* PCM data for left channel     */
         const int      buffer_r [],       /* PCM data for right channel    */
         const int           nsamples,      /* number of samples per channel */
@@ -854,7 +854,7 @@ int CDECL lame_encode_buffer_int(
  * return code = number of bytes output to mp3buf. Can be 0
  */
 int CDECL lame_encode_flush(
-        lame_global_flags *  gfp,    /* global context handle                 */
+        lame_global_flags *  gfp,    /* global context mHandle                 */
         unsigned char*       mp3buf, /* pointer to encoded MP3 stream         */
         int                  size);  /* number of valid octets in this stream */
 
@@ -876,7 +876,7 @@ int CDECL lame_encode_flush(
  * return code = number of bytes output to mp3buf. Can be 0
  */
 int CDECL lame_encode_flush_nogap(
-        lame_global_flags *  gfp,    /* global context handle                 */
+        lame_global_flags *  gfp,    /* global context mHandle                 */
         unsigned char*       mp3buf, /* pointer to encoded MP3 stream         */
         int                  size);  /* number of valid octets in this stream */
 
@@ -888,7 +888,7 @@ int CDECL lame_encode_flush_nogap(
  * lame_encode_flush_nogap().
  */
 int CDECL lame_init_bitstream(
-        lame_global_flags *  gfp);    /* global context handle                 */
+        lame_global_flags *  gfp);    /* global context mHandle                 */
 
 
 
@@ -983,7 +983,7 @@ int  CDECL lame_close (lame_global_flags *);
  * lame_encode_finish combines lame_encode_flush() and lame_close() in
  * one call.  However, once this call is made, the statistics routines
  * will no longer work because the data will have been cleared, and
- * lame_mp3_tags_fid() cannot be called to add data to the VBR header
+ * lame_mp3_tags_fid() cannot be called to add data to the VBR mHeader
  */
 int CDECL lame_encode_finish(
         lame_global_flags*  gfp,
@@ -1011,7 +1011,7 @@ typedef hip_global_flags *hip_t;
 
 
 typedef struct {
-  int header_parsed;   /* 1 if header was parsed and following data was
+  int header_parsed;   /* 1 if mHeader was parsed and following data was
                           computed                                       */
   int stereo;          /* number of channels                             */
   int samplerate;      /* sample rate                                    */
@@ -1020,7 +1020,7 @@ typedef struct {
   int mode_ext;        /* mp3 frame type                                 */
   int framesize;       /* number of samples per mp3 frame                */
 
-  /* this data is only computed if mpglib detects a Xing VBR header */
+  /* this data is only computed if mpglib detects a Xing VBR mHeader */
   unsigned long nsamp; /* number of samples in mp3 file.                 */
   int totalframes;     /* total number of frames in mp3 file             */
 
@@ -1063,7 +1063,7 @@ int CDECL hip_decode( hip_t           gfp
                     , short           pcm_r[]
                     );
 
-/* same as hip_decode, and also returns mp3 header data */
+/* same as hip_decode, and also returns mp3 mHeader data */
 int CDECL hip_decode_headers( hip_t           gfp
                             , unsigned char*  mp3buf
                             , size_t          len
@@ -1080,7 +1080,7 @@ int CDECL hip_decode1( hip_t          gfp
                      , short          pcm_r[]
                      );
 
-/* same as hip_decode1, but returns at most one frame and mp3 header data */
+/* same as hip_decode1, but returns at most one frame and mp3 mHeader data */
 int CDECL hip_decode1_headers( hip_t           gfp
                              , unsigned char*  mp3buf
                              , size_t          len

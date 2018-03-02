@@ -43,3 +43,4 @@ testfiles/**/*.mp3
 *.user
 *.cmake
 *.ilk
+Makefile

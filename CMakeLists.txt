@@ -11,19 +11,21 @@ include_directories(lib/gtest/include)
 include_directories(lib/gmock/include)
 
 IF(WIN32)
-    set(LIB_DIRECTORY lib/lame/bin/win lib/gtest/bin/win lib/gmock/bin/win)
-    set(APP_LIBS mp3lame.lib)
+    set(LIB_DIRECTORY lib/pthreads_win32/bin lib/lame/bin/win lib/gtest/bin/win lib/gmock/bin/win)
+    set(APP_LIBS mp3lame.lib pthreadVC2_x86.lib)
     set(TEST_LIBS gtest_main.lib gtest.lib gmock_main.a gmock.lib)
+    set(PTHREAD_INCLUDES lib/pthreads_win32/include)
 ELSE()
     set(LIB_DIRECTORY lib/lame/bin/nix lib/gtest/bin/nix lib/gmock/bin/nix)
     set(APP_LIBS mp3lame.a)
     set(TEST_LIBS gtest_main.a gtest.a gmock_main.a gmock.a)
+    set(PTHREAD_INCLUDES)
 ENDIF()
 
 link_directories(${LIB_DIRECTORY})
 
 add_executable(BulkWavConverter
-        lib/lame/include/lame.h src/Main.cpp src/threading/ThreadPool.cpp src/threading/ThreadPool.h src/Common.h src/threading/Thread.cpp src/threading/Thread.h src/threading/ThreadTask.h src/threading/ThreadWorkQueue.cpp src/threading/ThreadWorkQueue.h src/threading/PoolWorkerThread.cpp src/threading/PoolWorkerThread.h src/Mp3EncoderTask.cpp src/Mp3EncoderTask.h src/services/LameService.cpp src/services/LameService.h src/services/ConsoleLoggingService.cpp src/services/ConsoleLoggingService.h src/wavfile/WavFileEncoder.cpp src/wavfile/WavFileEncoder.h src/wavfile/Encoder.cpp src/wavfile/Encoder.h src/services/DirectoryService.cpp src/services/DirectoryService.h)
+        ${PTHREAD_INCLUDES} lib/lame/include/lame.h src/Main.cpp src/threading/ThreadPool.cpp src/threading/ThreadPool.h src/Common.h src/threading/Thread.cpp src/threading/Thread.h src/threading/ThreadTask.h src/threading/ThreadWorkQueue.cpp src/threading/ThreadWorkQueue.h src/threading/PoolWorkerThread.cpp src/threading/PoolWorkerThread.h src/Mp3EncoderTask.cpp src/Mp3EncoderTask.h src/services/LameService.cpp src/services/LameService.h src/services/ConsoleLoggingService.cpp src/services/ConsoleLoggingService.h src/wavfile/WavFileEncoder.cpp src/wavfile/WavFileEncoder.h src/wavfile/Encoder.cpp src/wavfile/Encoder.h src/services/DirectoryService.cpp src/services/DirectoryService.h)
 
 add_executable(BulkWavConverterTest test/TestMain.cpp test/ThreadWorkQueueTest.hpp test/ThreadTaskTest.hpp src/threading/ThreadWorkQueue.cpp)
 

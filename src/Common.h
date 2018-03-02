@@ -19,7 +19,6 @@
 #define millis __int64
 #else
 #include <unistd.h>
-#include <zconf.h>
 #define millis long
 #endif
 

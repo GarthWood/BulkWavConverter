@@ -10,10 +10,7 @@
 #ifndef BULKWAVCONVERTER_THREAD_H
 #define BULKWAVCONVERTER_THREAD_H
 
-#include <pthread.h>
-#include <assert.h>
-
-using namespace std;
+#include "../Common.h"
 
 class Thread
 {

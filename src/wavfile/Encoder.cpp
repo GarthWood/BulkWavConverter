@@ -5,7 +5,6 @@
  * Spawns a thread to encode audio data
  */
 
-#include <zconf.h>
 #include "Encoder.h"
 
 /**
@@ -83,7 +82,7 @@ void Encoder::run()
             }
         }
         else {
-            usleep(100);
+			this_thread::sleep_for(std::chrono::milliseconds(10));
         }
     }
 

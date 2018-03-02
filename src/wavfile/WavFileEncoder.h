@@ -10,17 +10,8 @@
 #ifndef BULKWAVCONVERTER_WAVREADER_H
 #define BULKWAVCONVERTER_WAVREADER_H
 
-#include <iostream>
-#include <string>
-#include <fstream>
-#include <cstdint>
+#include "../Common.h"
 #include "../services/LameService.h"
-
-using std::cin;
-using std::cout;
-using std::endl;
-using std::fstream;
-using std::string;
 
 class WavFileEncoder
 {

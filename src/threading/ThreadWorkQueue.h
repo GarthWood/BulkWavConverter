@@ -10,10 +10,8 @@
 #ifndef BULKWAVCONVERTER_THREADWORKQUEUE_H
 #define BULKWAVCONVERTER_THREADWORKQUEUE_H
 
+#include "../Common.h"
 #include "ThreadTask.h"
-#include <queue>
-#include <unistd.h>
-#include <pthread.h>
 
 class ThreadWorkQueue
 {

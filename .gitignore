@@ -31,3 +31,5 @@ cmake-build*/**/*
 CMakeFiles/**/*
 CMakeCache.txt
 testfiles/**/*.mp3
+
+.vs/**/*

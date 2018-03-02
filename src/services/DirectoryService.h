@@ -8,10 +8,8 @@
 #ifndef BULKWAVCONVERTER_DIRECTORYSERVICE_H
 #define BULKWAVCONVERTER_DIRECTORYSERVICE_H
 
-#include <string>
-#include <list>
 
-using namespace std;
+#include "../Common.h"
 
 class DirectoryService
 {

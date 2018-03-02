@@ -8,6 +8,7 @@
 #ifndef BULKWAVCONVERTER_LAMESERVICE_H
 #define BULKWAVCONVERTER_LAMESERVICE_H
 
+#include "../Common.h"
 #include <lame.h>
 
 class LameService

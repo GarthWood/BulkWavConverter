@@ -10,12 +10,11 @@
 #ifndef BULKWAVCONVERTER_THREADPOOL_H
 #define BULKWAVCONVERTER_THREADPOOL_H
 
+#include "../Common.h"
 #include "ThreadTask.h"
 #include "ThreadWorkQueue.h"
 #include "Thread.h"
 #include "PoolWorkerThread.h"
-
-using namespace std;
 
 class ThreadPool
 {

@@ -10,6 +10,7 @@
 #ifndef BULKWAVCONVERTER_POOLWORKERTHREAD_H
 #define BULKWAVCONVERTER_POOLWORKERTHREAD_H
 
+#include "../Common.h"
 #include "Thread.h"
 #include "ThreadTask.h"
 #include "ThreadWorkQueue.h"

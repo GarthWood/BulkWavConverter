@@ -8,13 +8,10 @@
 #ifndef BULKWAVCONVERTER_ENCODER_H
 #define BULKWAVCONVERTER_ENCODER_H
 
-#include <lame.h>
-#include <queue>
 #include "../Common.h"
 #include "../threading/Thread.h"
+#include "../services/LameService.h"
 #include "WavFileEncoder.h"
-
-using namespace std;
 
 class Encoder : public Thread
 {

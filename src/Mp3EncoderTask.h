@@ -8,14 +8,12 @@
 #ifndef BULKWAVCONVERTER_MP3ENCODERTASK_H
 #define BULKWAVCONVERTER_MP3ENCODERTASK_H
 
-#include <lame.h>
+#include "Common.h"
 #include "threading/ThreadTask.h"
 #include "services/LameService.h"
 #include "services/ConsoleLoggingService.h"
 #include "wavfile/WavFileEncoder.h"
 #include "wavfile/Encoder.h"
-
-using namespace std;
 
 class Mp3EncoderTask : public ThreadTask
 {

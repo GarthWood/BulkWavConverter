@@ -44,11 +44,11 @@ void Mp3EncoderTask::run()
     WavFileEncoder wavFile;
     string status;
 
-    long encodingStartTime = getMilliseconds();
+    millis encodingStartTime = getMilliseconds();
 
     if (wavFile.loadAndEncode(mInputFilename.c_str(), mOutputFilename.c_str(), mLameService, status))
     {
-        long encodingDuration = getMilliseconds() - encodingStartTime;
+		millis encodingDuration = getMilliseconds() - encodingStartTime;
 
         mLoggingService->log("%s   Duration=%ldms   [SUCCESS]", mInputFilename.c_str(), encodingDuration);
     }

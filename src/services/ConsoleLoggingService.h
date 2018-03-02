@@ -8,11 +8,7 @@
 #ifndef BULKWAVCONVERTER_LOGGINGSERVICE_H
 #define BULKWAVCONVERTER_LOGGINGSERVICE_H
 
-#include <pthread.h>
-#include <stdio.h>
-#include <iostream>
-
-using namespace std;
+#include "../Common.h"
 
 class ConsoleLoggingService
 {

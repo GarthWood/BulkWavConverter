@@ -2,10 +2,7 @@
 // Created by Garth on 2018/03/02.
 //
 
-#include <sys/stat.h>
-#include <vector>
 #include "DirectoryService.h"
-#include "dirent.h"
 
 /**
  * Constructor

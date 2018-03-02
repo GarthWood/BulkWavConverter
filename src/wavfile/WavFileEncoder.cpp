@@ -8,7 +8,6 @@
  */
 
 #include "WavFileEncoder.h"
-#include "../Common.h"
 #include "Encoder.h"
 
 /**

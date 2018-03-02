@@ -14,7 +14,6 @@
  */
 Thread::Thread()
 : mState(EState_None)
-, mHandle(0)
 {
 }
 
@@ -23,7 +22,6 @@ Thread::Thread()
  */
 Thread::~Thread()
 {
-    assert(mState != EState_Started || mJoined);
 }
 
 /**
@@ -31,8 +29,6 @@ Thread::~Thread()
  */
 void Thread::start()
 {
-    assert(mState == EState_None);
-
     if (pthread_create(&mHandle, nullptr, threadProc, this))
     {
         abort();
@@ -46,8 +42,6 @@ void Thread::start()
  */
 void Thread::join()
 {
-    assert(mState == EState_Started);
-
     pthread_join(mHandle, nullptr);
 
     mState = EState_Joined;

@@ -1,5 +1,5 @@
 # BulkWavConverter
-This bulk converter is a cross-platform command line tool that converts all WAV files in a directory, including subfolders.
+This bulk converter is a cross-platform command line tool that converts all WAV files in a directory to MP3, including subfolders.
 
 ## Features
 * Thread pool for managing system resources

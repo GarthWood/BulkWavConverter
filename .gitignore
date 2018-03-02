@@ -33,3 +33,13 @@ CMakeCache.txt
 testfiles/**/*.mp3
 
 .vs/**/*
+*.log
+*.filters
+*.tlog
+*.exe
+*.pdb
+*.sln
+*.vcxproj
+*.user
+*.cmake
+*.ilk

@@ -43,7 +43,7 @@ int DirectoryService::getFiles(const char* path, list<string>& files)
 
             appendPath(path, dent->d_name, fullPath);
 
-            if (isDirectory(fullPath))
+            if (isDirectory(fullPath.c_str()))
             {
                 getFiles(fullPath.c_str(), files);
             }
@@ -88,25 +88,24 @@ void DirectoryService::getTruncatedPath(const char *path, string &filename)
     }
 }
 
-
-/****************************************************************************
- * Private Methods
-****************************************************************************/
-
 /**
  * Returns whether the specified path is a directory
  * @param path The path
  * @return Whether the specified path is a directory
  */
-bool DirectoryService::isDirectory(string& path)
+bool DirectoryService::isDirectory(const char* path)
 {
     struct stat statbuf;
 
-    if (stat(path.c_str(), &statbuf) != 0)
+    if (stat(path, &statbuf) != 0)
         return false;
 
     return S_ISDIR(statbuf.st_mode);
 }
+
+/****************************************************************************
+ * Private Methods
+****************************************************************************/
 
 /**
  * Returns whether the specified path must be excluded from the list

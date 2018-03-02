@@ -39,14 +39,14 @@ public:
      */
     void getTruncatedPath(const char *path, string &filename);
 
-private:
-
     /**
      * Returns whether the specified path is a directory
      * @param path The path
      * @return Whether the specified path is a directory
      */
-    bool isDirectory(string& path);
+    bool isDirectory(const char *path);
+
+private:
 
     /**
      * Returns whether the specified path must be excluded from the list

@@ -47,6 +47,12 @@ int main(int argc, char* args[])
 
     const char* directory = args[1];
 
+    if (!directoryService.isDirectory(directory))
+    {
+        loggingService.log("'%s' is not a directory", directory);
+        return 1;
+    }
+
     printDateTime("Task started at %s");
 
     ThreadPool threadPool(DEFAULT_THREAD_COUNT);

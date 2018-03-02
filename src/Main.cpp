@@ -78,7 +78,7 @@ int main(int argc, char* args[])
         loggingService.log(fileCount == -1 ? "Directory does not exist" : "No files found in directory");
     }
 
-    printDateTime("Task completed at %s");
+    printDateTime("\nTask completed at %s");
 
     return 0;
 }

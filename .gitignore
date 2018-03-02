@@ -30,4 +30,4 @@
 cmake-build*/**/*
 CMakeFiles/**/*
 CMakeCache.txt
-testfiles/**/*
+testfiles/**/*.mp3

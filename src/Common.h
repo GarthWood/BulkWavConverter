@@ -2,19 +2,18 @@
  * Author: Garth Wood
  * Date: 02 March 2018
  *
- * Common vars and methods
+ * Common includes
  */
 
 #ifndef BULKWAVCONVERTER_COMMON_H
 #define BULKWAVCONVERTER_COMMON_H
 
 #ifndef WIN32_LEAN_AND_MEAN
-#   define WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
 #endif
 
 #ifdef _WINDOWS
 #include <windows.h>
-#include <atomic>
 #define _TIMESPEC_DEFINED
 #define millis __int64
 #else
@@ -22,7 +21,10 @@
 #define millis long
 #endif
 
-#include <stdio.h>
+#include <atomic>
+#include <cstdarg>
+#include <memory.h>
+#include <cstdio>
 #include <cstdio>
 #include <chrono>
 #include <string>
@@ -56,13 +58,13 @@ inline millis getMilliseconds()
     return std::chrono::duration_cast< std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 }
 
-inline int getFileSize(FILE* file)
+inline long getFileSize(FILE* file)
 {
-    fseek(file,0,SEEK_END);
+    fseek(file, 0, SEEK_END);
 
-    int size = ftell(file);
+    long size = ftell(file);
 
-    fseek(file,0,SEEK_SET);
+    fseek(file, 0, SEEK_SET);
 
     return size;
 }
@@ -70,13 +72,13 @@ inline int getFileSize(FILE* file)
 inline void dateAsString(string& output)
 {
     time_t rawtime;
-    struct tm * timeinfo;
+    struct tm* timeinfo;
     char buffer[80];
 
     time (&rawtime);
     timeinfo = localtime(&rawtime);
 
-    strftime(buffer,sizeof(buffer),"%d-%m-%Y %I:%M:%S",timeinfo);
+    strftime(buffer, sizeof(buffer), "%d-%m-%Y %I:%M:%S", timeinfo);
 
     output = buffer;
 }

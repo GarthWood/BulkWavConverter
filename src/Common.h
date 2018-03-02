@@ -15,7 +15,6 @@
 #ifdef _WINDOWS
 #include <windows.h>
 #include <atomic>
-#include <thread>
 #define _TIMESPEC_DEFINED
 #define millis __int64
 #else
@@ -35,6 +34,7 @@
 #include <queue>
 #include <list>
 #include <vector>
+#include <thread>
 
 #include <sys/stat.h>
 #include <dirent.h>

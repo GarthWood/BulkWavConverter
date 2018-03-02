@@ -31,7 +31,7 @@ add_executable(BulkWavConverter
 add_executable(BulkWavConverterTest test/TestMain.cpp test/ThreadWorkQueueTest.hpp test/ThreadTaskTest.hpp src/threading/ThreadWorkQueue.cpp)
 
 IF(MSVC)
-set_target_properties(BulkWavConverterTest PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+    set_target_properties(BulkWavConverterTest PROPERTIES COMPILE_FLAGS "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 ENDIF()
 
 target_link_libraries(BulkWavConverter ${APP_LIBS})

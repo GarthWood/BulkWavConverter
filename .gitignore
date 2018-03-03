@@ -32,6 +32,8 @@ CMakeFiles/**/*
 CMakeCache.txt
 testfiles/**/*.mp3
 
+!pthreadVC2.dll
+
 .vs/**/*
 *.log
 *.filters

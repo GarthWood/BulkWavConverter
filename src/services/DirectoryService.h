@@ -28,9 +28,10 @@ public:
      * Gets the list of files in the folder provided and all subfolders
      * @param path The directory
      * @param files THe output file list
+     * @param includeSubDirectories Whether to parse subfolders
      * @return The number of files found
      */
-    int getFiles(const char* path, list<string>& files);
+    int getFiles(const char* path, list<string>& files, bool includeSubDirectories = false);
 
     /**
      * Gets the filename less the extension

@@ -24,9 +24,10 @@ DirectoryService::~DirectoryService()
  * Gets the list of files in the folder provided and all subfolders
  * @param path The directory
  * @param files THe output file list
+ * @param includeSubDirectories Whether to parse subfolders
  * @return The number of files found
  */
-int DirectoryService::getFiles(const char* path, list<string>& files)
+int DirectoryService::getFiles(const char* path, list<string>& files, bool includeSubDirectories/* = false*/)
 {
     DIR* directory;
     dirent* dent;
@@ -45,7 +46,10 @@ int DirectoryService::getFiles(const char* path, list<string>& files)
 
             if (isDirectory(fullPath.c_str()))
             {
-                getFiles(fullPath.c_str(), files);
+                if (includeSubDirectories)
+                {
+                    getFiles(fullPath.c_str(), files);
+                }
             }
             else
             {

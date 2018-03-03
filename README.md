@@ -27,7 +27,7 @@ If on OSX or Linux:
 
 ```make```
 
-If on Windows, open the VS solution.
+If on Windows, open the VS solution and build the ALL_BUILDS project.
 
 ## Usage
 

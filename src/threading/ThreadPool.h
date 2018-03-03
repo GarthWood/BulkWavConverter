@@ -21,6 +21,7 @@ class ThreadPool
 public:
     /**
      * Constructor
+     * @param size The maximum number of active threads
      */
     ThreadPool(int size);
 

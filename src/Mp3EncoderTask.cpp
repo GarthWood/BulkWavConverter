@@ -28,7 +28,6 @@ Mp3EncoderTask::Mp3EncoderTask(const char* inputFilename, const char* ouputFilen
  */
 Mp3EncoderTask::~Mp3EncoderTask()
 {
-
 }
 
 

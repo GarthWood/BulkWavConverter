@@ -1,6 +1,9 @@
-//
-// Created by Garth on 2018/03/01.
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * A service to log to the console
+ */
 
 #include "ConsoleLoggingService.h"
 

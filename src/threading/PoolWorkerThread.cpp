@@ -18,7 +18,6 @@ PoolWorkerThread::PoolWorkerThread(ThreadWorkQueue& workQueue, bool deleteTaskOn
 : mWorkQueue(workQueue)
 , mDeleteTaskOnComplete(deleteTaskOnComplete)
 {
-
 }
 
 

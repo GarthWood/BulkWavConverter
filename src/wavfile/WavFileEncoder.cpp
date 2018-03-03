@@ -15,7 +15,6 @@
  */
 WavFileEncoder::WavFileEncoder()
 {
-
 }
 
 /**
@@ -23,7 +22,6 @@ WavFileEncoder::WavFileEncoder()
  */
 WavFileEncoder::~WavFileEncoder()
 {
-
 }
 
 /**

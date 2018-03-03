@@ -1,15 +1,21 @@
-//
-// Created by Garth on 2018/03/01.
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * A service to handle LAME instances
+ */
 
 #include "LameService.h"
+
+#define ENCODING_QUALITY_BEST   2
+#define ENCODING_QUALITY_GOOD   5
+#define ENCODING_QUALITY_OK     7
 
 /**
  * Constructor
  */
 LameService::LameService()
 {
-
 }
 
 /**
@@ -17,7 +23,6 @@ LameService::LameService()
  */
 LameService::~LameService()
 {
-
 }
 
 /**
@@ -32,7 +37,7 @@ lame_t LameService::createLameInstance(int sampleRate, int numChannels)
 
     lame_set_in_samplerate(lame, sampleRate);
     lame_set_num_channels(lame, numChannels);
-    lame_set_quality(lame, 5);
+    lame_set_quality(lame, ENCODING_QUALITY_GOOD);
     lame_set_VBR(lame, vbr_default);
 
     lame_init_params(lame);

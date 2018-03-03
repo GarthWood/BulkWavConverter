@@ -1,6 +1,9 @@
-//
-// Created by Garth on 2018/03/02.
-//
+/**
+ * Author: Garth Wood
+ * Date: 02 March 2018
+ *
+ * A service to access directory information
+ */
 
 #include "DirectoryService.h"
 
@@ -9,7 +12,6 @@
  */
 DirectoryService::DirectoryService()
 {
-
 }
 
 /**
@@ -17,7 +19,6 @@ DirectoryService::DirectoryService()
  */
 DirectoryService::~DirectoryService()
 {
-
 }
 
 /**

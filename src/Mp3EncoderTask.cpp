@@ -50,11 +50,11 @@ void Mp3EncoderTask::run()
     {
 		millis encodingDuration = getMilliseconds() - encodingStartTime;
 
-        mLoggingService->log("%s   Duration=%ldms   [SUCCESS]", mInputFilename.c_str(), encodingDuration);
+        mLoggingService->log("[SUCCESS]    %s    Duration=%ldms", mInputFilename.c_str(), encodingDuration);
     }
     else
     {
-        mLoggingService->log("%s   [ERROR]   %s", mInputFilename.c_str(), status.c_str());
+        mLoggingService->log("[IGNORED]    %s    %s", mInputFilename.c_str(), status.c_str());
     }
 }
 

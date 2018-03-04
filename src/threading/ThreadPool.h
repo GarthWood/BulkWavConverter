@@ -22,8 +22,9 @@ public:
     /**
      * Constructor
      * @param size The maximum number of active threads
+     * @param deleteTaskOnComplete Whether the task must be deleted once it completes
      */
-    ThreadPool(int size);
+    ThreadPool(int size, bool deleteTaskOnComplete = true);
 
     /**
      * Destructor

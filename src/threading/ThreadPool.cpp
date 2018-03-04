@@ -11,12 +11,14 @@
 
 /**
  * Constructor
+ * @param size The maximum number of active threads
+ * @param deleteTaskOnComplete Whether the task must be deleted once it completes
  */
-ThreadPool::ThreadPool(int size)
+ThreadPool::ThreadPool(int size, bool deleteTaskOnComplete/* = true*/)
 {
     for (int i = 0; i < size; ++i)
     {
-        mThreads.push_back(new PoolWorkerThread(mWorkQueue));
+        mThreads.push_back(new PoolWorkerThread(mWorkQueue, deleteTaskOnComplete));
         mThreads.back()->start();
     }
 }

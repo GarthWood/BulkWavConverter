@@ -12,9 +12,9 @@
 /**
  * Constructor
  * @param workQueue The threading work queue
- * @param deleteTaskOnComplete Whether the task must be delete once it completes
+ * @param deleteTaskOnComplete Whether the task must be deleted once it completes
  */
-PoolWorkerThread::PoolWorkerThread(ThreadWorkQueue& workQueue, bool deleteTaskOnComplete/* = true*/)
+PoolWorkerThread::PoolWorkerThread(ThreadWorkQueue& workQueue, bool deleteTaskOnComplete)
 : mWorkQueue(workQueue)
 , mDeleteTaskOnComplete(deleteTaskOnComplete)
 {

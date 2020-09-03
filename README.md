@@ -38,4 +38,4 @@ If on Windows, open the VS solution and build the ALL_BUILDS project.
 ## Improvements
 * Shared pointers.
 * Mutex signalling.
-* Resource error validation.
+* Resource error checking.

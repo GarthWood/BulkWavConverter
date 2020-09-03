@@ -34,3 +34,7 @@ If on Windows, open the VS solution and build the ALL_BUILDS project.
 ```BulkWavConverter <directory>```
 
 ```BulkWavConverterTest```
+
+## Improvements
+* Use shared pointers.
+* Use mutex signalling.

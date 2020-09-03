@@ -3,7 +3,7 @@ This bulk converter is a cross-platform command line tool that converts all WAV 
 
 ## Features
 * Thread pool for managing system resources
-* Parallel file loading and encoding
+* Concurrent file loading and encoding
 * Unit testing using GoogleTest (only one test has been added to demonstrate the usage)
 
 ## Supported Platforms
